@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Análisis de Emisiones</title>
+    <style>
+        :root {
+            --title-color: #0d2a0f;
+            --primary-color: #114518;
+            --secondary-color: #2e7d32;
+            --background-color: #f0f7f0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-color);
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            color: var(--title-color);
+        }
+        h3 {
+            color: var(--primary-color);
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-color);
+        }
+        .report-header {
+            border-bottom: 2px solid #e1e1e1;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+        .chart-figure {
+            margin: 40px 0;
+            padding: 20px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+        }
+        .chart-figure img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        figcaption {
+            font-style: italic;
+            margin-top: 10px;
+            color: #666;
+            text-align: center;
+        }
+        .report-footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding: 15px 0;
+            background-color: white;
+        }
+        .badge {
+            background-color: var(--title-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            vertical-align: middle;
+        }
+        .eu-logo {
+            margin-right: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            max-width: 60px;
+        }
+        .data-methodology summary {
+            color: var(--title-color);
+            cursor: pointer;
+        }
+        .data-methodology summary:hover {
+            color: var(--secondary-color);
+        }
+        .data-methodology {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .section-intro {
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+        .comparison-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .conclusions, .data-quality {
+            margin-top: 40px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 10px;
+            }
+            .eu-logo {
+                max-width: 40px;
+            }
+            .report-header {
+                padding-bottom: 15px;
+            }
+            .chart-figure {
+                padding: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            .report-meta {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <header class="report-header">
+            <div class="header-content" style="display: flex; align-items: center;">
+                <div class="logo-container">
+                    <img src="graficos/eu-logo.png" alt="Logo UE" class="eu-logo">
+                </div>
+                <div>
+                    <h1>Análisis de Emisiones GHG - Unión Europea <span class="badge">2023</span></h1>
+                    <p class="report-meta">Generado el: 2025-07-06 17:32 | fuente: EEA</p>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section aria-labelledby="summary-section">
+                <h2 id="summary-section">Resumen General</h2>
+                <p>El dataset analizado contiene información sobre emisiones de gases de efecto invernadero con:</p>
+                <ul>
+                    <li>Total de registros: 90236</li>
+                    <li>Total de columnas: 10</li>
+                    <li>Columnas numéricas: TIME_PERIOD, OBS_VALUE</li>
+                </ul>
+                <h3>Estadísticas Descriptivas</h3>
+                <h4>Columna: OBS_VALUE</h4>
+                <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Media</th>
+      <th>Mediana</th>
+      <th>Desviación estándar</th>
+      <th>Rango</th>
+      <th>IQR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Media</th>
+      <td>9499.675365</td>
+      <td>444.28523</td>
+      <td>50110.730533</td>
+      <td>1.288425e+06</td>
+      <td>2695.640752</td>
+    </tr>
+    <tr>
+      <th>Mediana</th>
+      <td>9499.675365</td>
+      <td>444.28523</td>
+      <td>50110.730533</td>
+      <td>1.288425e+06</td>
+      <td>2695.640752</td>
+    </tr>
+    <tr>
+      <th>Desviación estándar</th>
+      <td>9499.675365</td>
+      <td>444.28523</td>
+      <td>50110.730533</td>
+      <td>1.288425e+06</td>
+      <td>2695.640752</td>
+    </tr>
+    <tr>
+      <th>Rango</th>
+      <td>9499.675365</td>
+      <td>444.28523</td>
+      <td>50110.730533</td>
+      <td>1.288425e+06</td>
+      <td>2695.640752</td>
+    </tr>
+    <tr>
+      <th>IQR</th>
+      <td>9499.675365</td>
+      <td>444.28523</td>
+      <td>50110.730533</td>
+      <td>1.288425e+06</td>
+      <td>2695.640752</td>
+    </tr>
+  </tbody>
+</table>
+                <h4>Calidad de Datos</h4>
+                <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Valores faltantes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Format_name</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>airpol</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>TIME_PERIOD</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Unit</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>geo</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Sector_code</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Sector_name</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>OBS_VALUE</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Notation</th>
+      <td>90236</td>
+    </tr>
+    <tr>
+      <th>DataSource</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+                <div class="data-quality">
+                    <h4>Valores Negativos</h4>
+                    <p>Se detectaron 6887 valores negativos en OBS_VALUE, que fueron filtrados para este análisis. Ver detalles en <a href="graficos/negative_values.csv">negative_values.csv</a>.</p>
+                </div>
+                <h4>Detección de Outliers</h4>
+                <ul>
+                    <li>TIME_PERIOD: 0 valores atípicos detectados (Z > 3)</li>
+                    <li>OBS_VALUE: 981 valores atípicos detectados (Z > 3)</li>
+                </ul>
+            </section>
+            <section aria-labelledby="viz-section">
+                <h2 id="viz-section">Visualizaciones Clave</h2>
+                <details class="data-methodology">
+                    <summary>Metodología y Fuentes</summary>
+                    <p>El siguiente análisis visual representa las emisiones de gases de efecto invernadero en la Unión Europea, medida en Gigagramos de CO2 equivalente (Gg CO2eq). Los datos provienen de la Agencia Europea de Medio Ambiente (EEA) y cubren el período 2010-2023 utilizando la clasificación IPCC 2006.</p>
+                    <ul>
+                        <li><strong>Fuente de datos:</strong> European Environment Agency (EEA)</li>
+                        <li><strong>Última actualización:</strong> July 2025</li>
+                        <li><strong>Métrica:</strong> Emisiones brutas (inventario nacional)</li>
+                    </ul>
+                </details>
+                <figure class="chart-figure">
+                    <h3>Distribución de Emisiones (OBS_VALUE)</h3>
+                    <img src="graficos/histograma_obs_value.png" alt="Histograma mostrando distribución de emisiones en Gg CO2 equivalentes" aria-describedby="fig1-caption">
+                    <figcaption id="fig1-caption">Figura 1: Distribución logarítmica de valores de emisión</figcaption>
+                    <iframe src="graficos/histograma_interactivo.html" width="100%" height="400px" frameborder="0" aria-label="Histograma interactivo de emisiones"></iframe>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Distribución Sectorial</h3>
+                    <img src="graficos/boxplot_obs_value_sector.png" alt="Diagrama de caja por sectores económicos" aria-describedby="fig2-caption">
+                    <figcaption id="fig2-caption">Figura 2: Comparativa de emisiones por sector industrial</figcaption>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Comparativa por País</h3>
+                    <img src="graficos/boxplot_obs_value_pais.png" alt="Diagrama de caja por países" aria-describedby="fig3-caption">
+                    <figcaption id="fig3-caption">Figura 3: Rangos de emisión por nación (Gg CO2)</figcaption>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Evolución Temporal</h3>
+                    <img src="graficos/serie_temporal_obs_value.png" alt="Tendencias anuales de emisiones" aria-describedby="fig4-caption">
+                    <figcaption id="fig4-caption">Figura 4: Cambios en emisiones promedio (2010-2023)</figcaption>
+                    <iframe src="graficos/serie_temporal_interactiva.html" width="100%" height="400px" frameborder="0" aria-label="Serie temporal interactiva de emisiones"></iframe>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Matriz de Correlación de Emisiones</h3>
+                    <img src="graficos/heatmap_correlacion.png" alt="Mapa de calor de correlaciones entre países" aria-describedby="fig5-caption">
+                    <figcaption id="fig5-caption">Figura 5: Correlación de emisiones entre países europeos (valores cercanos a 1 indican patrones similares, -1 indican patrones opuestos)</figcaption>
+                    <h4>Correlaciones Significativas (>0.8)</h4>
+                    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>País 1</th>
+      <th>País 2</th>
+      <th>Correlación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Austria</td>
+      <td>Spain</td>
+      <td>0.804801</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Belgium</td>
+      <td>Denmark</td>
+      <td>0.951995</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Belgium</td>
+      <td>France</td>
+      <td>0.954239</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Belgium</td>
+      <td>Germany</td>
+      <td>0.853165</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Belgium</td>
+      <td>Hungary</td>
+      <td>0.833771</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Belgium</td>
+      <td>Italy</td>
+      <td>0.915028</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Belgium</td>
+      <td>Netherlands</td>
+      <td>0.946316</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Belgium</td>
+      <td>Sweden</td>
+      <td>0.969915</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Bulgaria</td>
+      <td>Czech Republic</td>
+      <td>0.894353</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Bulgaria</td>
+      <td>Estonia</td>
+      <td>0.826636</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Bulgaria</td>
+      <td>Lithuania</td>
+      <td>0.806721</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Bulgaria</td>
+      <td>Poland</td>
+      <td>0.846865</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Bulgaria</td>
+      <td>Romania</td>
+      <td>0.896813</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Bulgaria</td>
+      <td>Slovakia</td>
+      <td>0.883893</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Czech Republic</td>
+      <td>Germany</td>
+      <td>0.926576</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Czech Republic</td>
+      <td>Hungary</td>
+      <td>0.908122</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Czech Republic</td>
+      <td>Malta</td>
+      <td>-0.808937</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Czech Republic</td>
+      <td>Romania</td>
+      <td>0.951195</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Czech Republic</td>
+      <td>Slovakia</td>
+      <td>0.970904</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Denmark</td>
+      <td>France</td>
+      <td>0.931431</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Denmark</td>
+      <td>Germany</td>
+      <td>0.895332</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Denmark</td>
+      <td>Hungary</td>
+      <td>0.801582</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Denmark</td>
+      <td>Italy</td>
+      <td>0.834760</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Denmark</td>
+      <td>Netherlands</td>
+      <td>0.930319</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Denmark</td>
+      <td>Sweden</td>
+      <td>0.976397</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Estonia</td>
+      <td>Latvia</td>
+      <td>0.803781</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Estonia</td>
+      <td>Lithuania</td>
+      <td>0.865948</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Finland</td>
+      <td>Italy</td>
+      <td>0.870018</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>France</td>
+      <td>Germany</td>
+      <td>0.894278</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>France</td>
+      <td>Hungary</td>
+      <td>0.815372</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>France</td>
+      <td>Italy</td>
+      <td>0.914677</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>France</td>
+      <td>Netherlands</td>
+      <td>0.962924</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>France</td>
+      <td>Sweden</td>
+      <td>0.931189</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Germany</td>
+      <td>Hungary</td>
+      <td>0.861962</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Germany</td>
+      <td>Malta</td>
+      <td>-0.868071</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Germany</td>
+      <td>Netherlands</td>
+      <td>0.876555</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Germany</td>
+      <td>Romania</td>
+      <td>0.913311</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Germany</td>
+      <td>Slovakia</td>
+      <td>0.900184</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Germany</td>
+      <td>Sweden</td>
+      <td>0.888178</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Hungary</td>
+      <td>Romania</td>
+      <td>0.872532</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Hungary</td>
+      <td>Slovakia</td>
+      <td>0.921625</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Hungary</td>
+      <td>Sweden</td>
+      <td>0.807295</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Ireland</td>
+      <td>Portugal</td>
+      <td>0.913672</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Ireland</td>
+      <td>Spain</td>
+      <td>0.910111</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>Italy</td>
+      <td>Netherlands</td>
+      <td>0.857877</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>Italy</td>
+      <td>Sweden</td>
+      <td>0.847537</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Latvia</td>
+      <td>Lithuania</td>
+      <td>0.898088</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>Lithuania</td>
+      <td>Slovakia</td>
+      <td>0.806805</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Malta</td>
+      <td>Romania</td>
+      <td>-0.846869</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Malta</td>
+      <td>Slovakia</td>
+      <td>-0.810316</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Netherlands</td>
+      <td>Sweden</td>
+      <td>0.945613</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Poland</td>
+      <td>Romania</td>
+      <td>0.828571</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Portugal</td>
+      <td>Spain</td>
+      <td>0.892879</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Romania</td>
+      <td>Slovakia</td>
+      <td>0.950112</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>Slovenia</td>
+      <td>Spain</td>
+      <td>0.800710</td>
+    </tr>
+  </tbody>
+</table>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Análisis de Valores Atípicos</h3>
+                    <img src="graficos/outliers_analysis.png" alt="Distribución de valores atípicos" aria-describedby="fig6-caption">
+                    <figcaption id="fig6-caption">Figura 6: Países y sectores con mayor presencia de valores extremos</figcaption>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Top 5 Sectores Contaminantes</h3>
+                    <img src="graficos/top_sectores.png" alt="Sectores con mayores emisiones" aria-describedby="fig7-caption">
+                    <figcaption id="fig7-caption">Figura 7: Sectores que generan mayor cantidad de emisiones</figcaption>
+                    <img src="graficos/pie_top_sectores.png" alt="Contribución porcentual de sectores" aria-describedby="fig8-caption">
+                    <figcaption id="fig8-caption">Figura 8: Contribución porcentual de los top 5 sectores</figcaption>
+                </figure>
+                <figure class="chart-figure">
+                    <h3>Dispersión de Emisiones</h3>
+                    <img src="graficos/scatter_plot.png" alt="Dispersión de emisiones por año y país" aria-describedby="fig9-caption">
+                    <figcaption id="fig9-caption">Figura 9: Relación entre emisiones, años y países</figcaption>
+                </figure>
+            </section>
+            <section class="comparison-section">
+                <h2>Comparación Regional</h2>
+                <div class="comparison-grid">
+                    <figure class="chart-figure">
+                        <h3>Emisiones Norte vs Sur</h3>
+                        <img src="graficos/comparacion_regional.png" alt="Comparación entre regiones europeas" aria-describedby="fig10-caption">
+                        <figcaption id="fig10-caption">Figura 10: Comparativa de emisiones entre regiones norte y sur</figcaption>
+                    </figure>
+                    <figure class="chart-figure">
+                        <h3>Evolución Países Nórdicos</h3>
+                        <img src="graficos/nordicos_evolucion.png" alt="Tendencias en países nórdicos" aria-describedby="fig11-caption">
+                        <figcaption id="fig11-caption">Figura 11: Tendencias de emisiones en países nórdicos</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="conclusions">
+                <h2>Conclusiones</h2>
+                <ul>
+                    <li>Variabilidad significativa en las emisiones entre diferentes sectores, con Total emissions (UNFCCC) como el sector más contaminante.</li>
+                    <li>Se detectaron 981 valores atípicos en OBS_VALUE que requieren investigación adicional.</li>
+                    <li>El país con mayores emisiones promedio es Germany.</li>
+                    <li>La tendencia general de emisiones es decreciente desde 2010.</li>
+                    <li>Se filtraron 6887 valores negativos en OBS_VALUE, posiblemente debido a errores de datos o ajustes por captura de carbono.</li>
+                </ul>
+            </section>
+        </main>
+        <footer class="report-footer">
+            <p>Generado automáticamente con Python | 2025-07-06 17:32</p>
+        </footer>
+    </div>
+</body>
+</html>
